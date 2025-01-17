@@ -40,7 +40,8 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profiles'),
+        centerTitle: true,
+        title: Text("Users' Profiles"),
       ),
       body: ListView.builder(
         itemCount: _users.length,

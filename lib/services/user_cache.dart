@@ -1,7 +1,8 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:user_profile_management/models/user.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:user_profile_management/models/user.dart';
 
 class UserCache {
   static const String _key = 'cached_users';
@@ -21,8 +22,9 @@ class UserCache {
   }
 
   // Clear cached users
-  static Future<void> clearCache() async {
+   Future<void> clearCache() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_key);
+    print("deleted");
   }
 }
