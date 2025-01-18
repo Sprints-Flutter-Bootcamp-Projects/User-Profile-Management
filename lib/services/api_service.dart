@@ -6,12 +6,14 @@ class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: 'https://reqres.in/api'));
 
   // Fetch users with caching
-  Future<List<User>> getUsers() async {
+  Future<List<User>> getUsers(bool disallowAllowCache) async {
     try {
       // Try to load cached users first
-      final cachedUsers = await UserCache.getUsers();
-      if (cachedUsers.isNotEmpty) {
-        return cachedUsers;
+      if(!disallowAllowCache){
+        final cachedUsers = await UserCache.getUsers();
+        if (cachedUsers.isNotEmpty) {
+          return cachedUsers;
+        }
       }
 
       // If no cached data, fetch from API

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:user_profile_management/models/user.dart';
 import 'package:user_profile_management/views/edituserpage.dart';
 
+// ignore: must_be_immutable
 class UserDetailsPage extends StatefulWidget {
   User user;
   final Function(User) onUpdate;
