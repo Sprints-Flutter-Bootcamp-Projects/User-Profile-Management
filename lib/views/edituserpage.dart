@@ -3,9 +3,13 @@ import 'package:user_profile_management/models/user.dart';
 
 class EditUserPage extends StatefulWidget {
   final User user;
-  final Function() onUpdate;
+  final Function(User) onUpdate;
 
-  const EditUserPage({super.key, required this.user, required this.onUpdate});
+  const EditUserPage({
+    super.key,
+    required this.user,
+    required this.onUpdate,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -72,10 +76,17 @@ class _EditUserPageState extends State<EditUserPage> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    final updatedUser = User(
+                      id: widget.user.id,
+                      firstName: _firstNameController.text,
+                      lastName: _lastNameController.text,
+                      email: _emailController.text,
+                      avatar: widget.user.avatar,
+                    );
                     try {
-                      await widget.onUpdate();
+                      await widget.onUpdate(updatedUser);
                       // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
+                      Navigator.pop(context, updatedUser);
                     } catch (e) {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:user_profile_management/models/user.dart';
 import 'package:user_profile_management/services/api_service.dart';
-import 'package:user_profile_management/widgets/adduserpage.dart';
-import 'package:user_profile_management/widgets/userdetailspage.dart';
+import 'package:user_profile_management/views/adduserpage.dart';
+import 'package:user_profile_management/views/userdetailspage.dart';
+import 'package:user_profile_management/widgets/app_bar.dart';
 
 class UserListPage extends StatefulWidget {
   const UserListPage({super.key});
@@ -39,10 +40,7 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Users' Profiles"),
-      ),
+      appBar: pagesAppBar(context, "Users' Profiles"),
       body: ListView.builder(
         itemCount: _users.length,
         itemBuilder: (context, index) {
@@ -59,8 +57,14 @@ class _UserListPageState extends State<UserListPage> {
                 MaterialPageRoute(
                   builder: (context) => UserDetailsPage(
                     user: user,
-                    onUpdate: _loadUsers,
-                    onDelete: _loadUsers,
+                    onUpdate: (user) async {
+                      await _apiService.updateUser(user);
+                      _loadUsers();
+                    },
+                    onDelete: () async {
+                      await _apiService.deleteUser(_users[index].id);
+                      _loadUsers();
+                    },
                   ),
                 ),
               );
